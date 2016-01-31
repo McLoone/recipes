@@ -19,9 +19,9 @@ class RecipeTest(unittest.TestCase):
         self.recipe_store = RecipeStore()
 
     def test_add_recipe(self):
-        recipe = Recipe("description")
+        recipe = Recipe.from_json(RecipeTest.RECIPE)
 
-        recipe.id = self.recipe_store.add_recipe(recipe)
+        recipe.recipe_id = self.recipe_store.add_recipe(recipe)
 
         self.assertListEqual([recipe], self.recipe_store.list_recipes())
 
@@ -29,9 +29,9 @@ class RecipeTest(unittest.TestCase):
         recipe1 = Recipe("description1")
         recipe2 = Recipe("description2")
         recipe3 = Recipe("description3")
-        recipe1.id = self.recipe_store.add_recipe(recipe1)
-        recipe2.id = self.recipe_store.add_recipe(recipe2)
-        recipe3.id = self.recipe_store.add_recipe(recipe3)
+        recipe1.recipe_id = self.recipe_store.add_recipe(recipe1)
+        recipe2.recipe_id = self.recipe_store.add_recipe(recipe2)
+        recipe3.recipe_id = self.recipe_store.add_recipe(recipe3)
 
         return_list = self.recipe_store.list_recipes()
         return_list.sort(key=lambda r: r.description)
@@ -42,12 +42,12 @@ class RecipeTest(unittest.TestCase):
         self.assertListEqual([], self.recipe_store.list_recipes())
 
     def test_delete_recipe(self):
-        recipe = Recipe("description")
+        recipe = Recipe.from_json(RecipeTest.RECIPE)
 
-        recipe.id = self.recipe_store.add_recipe(recipe)
+        recipe.recipe_id = self.recipe_store.add_recipe(recipe)
         self.assertListEqual([recipe], self.recipe_store.list_recipes())
 
-        removed_recipe = self.recipe_store.remove_recipe(recipe.id)
+        removed_recipe = self.recipe_store.remove_recipe(recipe.recipe_id)
         self.assertListEqual([], self.recipe_store.list_recipes())
 
     def test_recipe_to_json(self):
