@@ -1,18 +1,33 @@
+import uuid
+
+
 class RecipeStore:
     def __init__(self):
-        self.recipes = []
+        self._recipes = dict()
 
     def add_recipe(self, recipe):
-        self.recipes.append(recipe)
+        recipe.id = uuid.uuid4()
+        self._recipes[recipe.id] = recipe
+        return recipe.id
 
-    def repices(self):
-        self.recipes
+    def remove_recipe(self, id):
+        recipe_to_remove = self._recipes[id]
+        del self._recipes[id]
+        return recipe_to_remove
+
+    def list_recipes(self):
+        return list(self._recipes.values())
 
 
 class Recipe:
-    def __init__(self, description, time = None, steps = None, ingredients = None, author = "Unknown", default_portions = 4, tags=None):
+    def __init__(self, description, author = "Unknown", default_portions = 4, time = None, steps=None, ingredients=None, tags=None):
+        if steps is None:
+            steps = []
+        if ingredients is None:
+            ingredients = []
         if tags is None:
             tags = []
+        self.id = None
         self.description = description
         self.tags = tags
         self.author = author
