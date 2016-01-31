@@ -7,13 +7,13 @@ class RecipeStore:
         self._recipes = dict()
 
     def add_recipe(self, recipe):
-        recipe.id = uuid.uuid4()
-        self._recipes[recipe.id] = recipe
-        return recipe.id
+        recipe.recipe_id = uuid.uuid4()
+        self._recipes[recipe.recipe_id] = recipe
+        return recipe.recipe_id
 
-    def remove_recipe(self, id):
-        recipe_to_remove = self._recipes[id]
-        del self._recipes[id]
+    def remove_recipe(self, recipe_id):
+        recipe_to_remove = self._recipes[recipe_id]
+        del self._recipes[recipe_id]
         return recipe_to_remove
 
     def list_recipes(self):
@@ -45,8 +45,7 @@ class Recipe:
         self.ingredients = ingredients
 
     @classmethod
-    def from_json(cls, data):
-        json_data = json.loads(data, 'utf-8')
+    def from_json(cls, json_data):
         return Recipe(recipe_id=json_data['recipe_id'],
                       description=json_data['description'],
                       author=json_data['author'],

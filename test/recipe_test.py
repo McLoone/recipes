@@ -25,7 +25,7 @@ class RecipeTest(unittest.TestCase):
 
         self.assertListEqual([recipe], self.recipe_store.list_recipes())
 
-    def test_add_multiple_recipies(self):
+    def test_add_multiple_recipes(self):
         recipe1 = Recipe("description1")
         recipe2 = Recipe("description2")
         recipe3 = Recipe("description3")
@@ -56,7 +56,7 @@ class RecipeTest(unittest.TestCase):
         self.assertEquals(json_recipe, RecipeTest.RECIPE)
 
     def test_json_to_recipe(self):
-        recipe = Recipe.from_json(RecipeTest.RECIPE)
+        recipe = Recipe.from_json(json.loads(RecipeTest.RECIPE, 'utf-8'))
         self.assertEquals(recipe.recipe_id, None)
         self.assertEquals(recipe.author, "Author")
         self.assertEquals(recipe.description, "Description")
