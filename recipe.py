@@ -1,4 +1,5 @@
 import uuid
+import json
 
 
 class RecipeStore:
@@ -20,14 +21,21 @@ class RecipeStore:
 
 
 class Recipe:
-    def __init__(self, description, author = "Unknown", default_portions = 4, time = None, steps=None, ingredients=None, tags=None):
+    def __init__(self, description,
+                 recipe_id=None,
+                 author="Unknown",
+                 default_portions=4,
+                 time=None,
+                 steps=None,
+                 ingredients=None,
+                 tags=None):
         if steps is None:
             steps = []
         if ingredients is None:
             ingredients = []
         if tags is None:
             tags = []
-        self.id = None
+        self.recipe_id = recipe_id
         self.description = description
         self.tags = tags
         self.author = author
@@ -35,6 +43,21 @@ class Recipe:
         self.time = time
         self.steps = steps
         self.ingredients = ingredients
+
+    @classmethod
+    def from_json(cls, data):
+        json_data = json.loads(data, 'utf-8')
+        return Recipe(recipe_id=json_data['recipe_id'],
+                      description=json_data['description'],
+                      author=json_data['author'],
+                      default_portions=json_data['default_portions'],
+                      time=json_data['time'],
+                      steps=json_data['steps'],
+                      ingredients=json_data['ingredients'],
+                      tags=json_data['tags'])
+
+    def to_json(self):
+        return json.dumps(self, default=lambda obj: obj.__dict__, sort_keys=True, indent=4)
 
 
 class Ingredient:

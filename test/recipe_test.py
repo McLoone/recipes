@@ -1,8 +1,20 @@
 import unittest
+import json
 from recipe import RecipeStore, Recipe
 
 
 class RecipeTest(unittest.TestCase):
+    RECIPE = """{
+    "author": "Author",
+    "default_portions": 4,
+    "description": "Description",
+    "ingredients": [],
+    "recipe_id": null,
+    "steps": [],
+    "tags": [],
+    "time": 30
+}"""
+
     def setUp(self):
         self.recipe_store = RecipeStore()
 
@@ -37,3 +49,19 @@ class RecipeTest(unittest.TestCase):
 
         removed_recipe = self.recipe_store.remove_recipe(recipe.id)
         self.assertListEqual([], self.recipe_store.list_recipes())
+
+    def test_recipe_to_json(self):
+        recipe = Recipe(author="Author", description="Description", time=30)
+        json_recipe = recipe.to_json()
+        self.assertEquals(json_recipe, RecipeTest.RECIPE)
+
+    def test_json_to_recipe(self):
+        recipe = Recipe.from_json(RecipeTest.RECIPE)
+        self.assertEquals(recipe.recipe_id, None)
+        self.assertEquals(recipe.author, "Author")
+        self.assertEquals(recipe.description, "Description")
+        self.assertEquals(recipe.time, 30)
+        self.assertEquals(recipe.default_portions, 4)
+        self.assertEquals(recipe.ingredients, [])
+        self.assertEquals(recipe.steps, [])
+        self.assertEquals(recipe.tags, [])
