@@ -35,7 +35,9 @@ class Recipe:
             ingredients = []
         if tags is None:
             tags = []
-        self.recipe_id = recipe_id
+
+        if recipe_id is not None:
+            self.recipe_id = recipe_id
         self.description = description
         self.tags = tags
         self.author = author
@@ -46,14 +48,7 @@ class Recipe:
 
     @classmethod
     def from_json(cls, json_data):
-        return Recipe(recipe_id=json_data['recipe_id'],
-                      description=json_data['description'],
-                      author=json_data['author'],
-                      default_portions=json_data['default_portions'],
-                      time=json_data['time'],
-                      steps=json_data['steps'],
-                      ingredients=json_data['ingredients'],
-                      tags=json_data['tags'])
+        return Recipe(**json.loads(json_data, 'utf-8'))
 
     def to_json(self):
         return json.dumps(self, default=lambda obj: obj.__dict__, sort_keys=True, indent=4)

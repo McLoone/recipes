@@ -9,7 +9,6 @@ class RecipeTest(unittest.TestCase):
     "default_portions": 4,
     "description": "Description",
     "ingredients": [],
-    "recipe_id": null,
     "steps": [],
     "tags": [],
     "time": 30
@@ -56,8 +55,7 @@ class RecipeTest(unittest.TestCase):
         self.assertEquals(json_recipe, RecipeTest.RECIPE)
 
     def test_json_to_recipe(self):
-        recipe = Recipe.from_json(json.loads(RecipeTest.RECIPE, 'utf-8'))
-        self.assertEquals(recipe.recipe_id, None)
+        recipe = Recipe.from_json(RecipeTest.RECIPE)
         self.assertEquals(recipe.author, "Author")
         self.assertEquals(recipe.description, "Description")
         self.assertEquals(recipe.time, 30)

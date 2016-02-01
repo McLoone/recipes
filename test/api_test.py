@@ -9,7 +9,6 @@ class ServerTestCase(unittest.TestCase):
     "default_portions": 4,
     "description": "Description",
     "ingredients": [],
-    "recipe_id": null,
     "steps": [],
     "tags": [],
     "time": 30
