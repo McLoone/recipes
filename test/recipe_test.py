@@ -63,3 +63,9 @@ class RecipeTest(unittest.TestCase):
         self.assertEquals(recipe.ingredients, [])
         self.assertEquals(recipe.steps, [])
         self.assertEquals(recipe.tags, [])
+
+    def test_recipe_to_json_to_recipe(self):
+        recipe = Recipe.from_json(RecipeTest.RECIPE)
+        json_recipe = recipe.to_json()
+        self.assertEquals(json_recipe, RecipeTest.RECIPE)
+
