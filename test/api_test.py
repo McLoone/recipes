@@ -30,3 +30,8 @@ class ServerTestCase(unittest.TestCase):
         self.assertEquals(recipes[0]['recipe_id'], recipe_id)
         self.app.delete('/recipes/' + recipe_id)
 
+    def test_delete_recipe_that_dont_exist(self):
+        response = self.app.delete('/recipes/123')
+        self.assertEquals(response.status_code, 404)
+
+

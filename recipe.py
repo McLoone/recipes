@@ -12,8 +12,9 @@ class RecipeStore:
         return recipe.recipe_id
 
     def remove_recipe(self, recipe_id):
-        recipe_to_remove = self._recipes[recipe_id]
-        del self._recipes[recipe_id]
+        recipe_to_remove = self._recipes.get(recipe_id)
+        if recipe_to_remove is not None:
+            del self._recipes[recipe_id]
         return recipe_to_remove
 
     def list_recipes(self):

@@ -20,7 +20,10 @@ def add_recipe():
 @app.route('/recipes/<recipe_id>', methods=['DELETE'])
 def remove_recipe(recipe_id):
     recipe = current_app.recipe_store.remove_recipe(recipe_id)
-    return json.dumps(recipe, default=lambda obj: obj.__dict__, sort_keys=True)
+    if recipe is None:
+        return "Recipe not found", 404
+    else:
+        return json.dumps(recipe, default=lambda obj: obj.__dict__, sort_keys=True)
 
 if __name__ == "__main__":
     app.run()

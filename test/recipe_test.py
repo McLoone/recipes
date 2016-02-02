@@ -49,6 +49,10 @@ class RecipeTest(unittest.TestCase):
         removed_recipe = self.recipe_store.remove_recipe(recipe.recipe_id)
         self.assertListEqual([], self.recipe_store.list_recipes())
 
+    def test_delete_missing_recipe(self):
+        removed_recipe = self.recipe_store.remove_recipe('missing')
+        self.assertEquals(removed_recipe, None)
+
     def test_recipe_to_json(self):
         recipe = Recipe(author="Author", description="Description", time=30)
         json_recipe = recipe.to_json()
