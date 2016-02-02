@@ -1,20 +1,26 @@
 import json
-from flask import Flask, jsonify, request
+from flask import Flask, request, current_app
 from recipe import RecipeStore, Recipe
 
 app = Flask(__name__)
-recipe_store = RecipeStore()
-
+with app.app_context():
+    current_app.recipe_store = RecipeStore()
 
 @app.route('/recipes')
 def list_recipes():
-    return jsonify(recipe_store.list_recipes())
+    recipes = current_app.recipe_store.list_recipes()
+    return json.dumps(recipes, default=lambda obj: obj.__dict__, sort_keys=True)
 
 
-@app.route('/recipes', methods = ['POST'])
+@app.route('/recipes', methods=['POST'])
 def add_recipe():
-    json_data = request.get_json(force=True)
-    return recipe_store.add_recipe(Recipe.from_json(json_data))
+    json_data = request.data.decode('utf-8')
+    return current_app.recipe_store.add_recipe(Recipe.from_json(json_data))
+
+@app.route('/recipes/<recipe_id>', methods=['DELETE'])
+def remove_recipe(recipe_id):
+    recipe = current_app.recipe_store.remove_recipe(recipe_id)
+    return json.dumps(recipe, default=lambda obj: obj.__dict__, sort_keys=True)
 
 if __name__ == "__main__":
     app.run()

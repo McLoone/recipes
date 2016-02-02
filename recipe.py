@@ -7,7 +7,7 @@ class RecipeStore:
         self._recipes = dict()
 
     def add_recipe(self, recipe):
-        recipe.recipe_id = uuid.uuid4()
+        recipe.recipe_id = uuid.uuid4().hex
         self._recipes[recipe.recipe_id] = recipe
         return recipe.recipe_id
 
