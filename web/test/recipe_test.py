@@ -1,6 +1,5 @@
 import unittest
-import json
-from recipe import RecipeStore, Recipe
+from web.recipe import RecipeStore, Recipe
 
 
 class RecipeTest(unittest.TestCase):

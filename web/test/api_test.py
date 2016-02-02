@@ -1,5 +1,5 @@
 import unittest
-import server
+import web.server
 import json
 
 
@@ -15,8 +15,8 @@ class ServerTestCase(unittest.TestCase):
 }"""
 
     def setUp(self):
-        server.app.testing = True
-        self.app = server.app.test_client()
+        web.server.app.testing = True
+        self.app = web.server.app.test_client()
 
     def test_get_all_recipes_with_empty_store(self):
         response = self.app.get('/recipes')

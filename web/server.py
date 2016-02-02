@@ -1,6 +1,6 @@
 import json
 from flask import Flask, request, current_app
-from recipe import RecipeStore, Recipe
+from web.recipe import RecipeStore, Recipe
 
 app = Flask(__name__)
 with app.app_context():
