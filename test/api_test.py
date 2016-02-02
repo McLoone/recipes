@@ -22,6 +22,17 @@ class ServerTestCase(unittest.TestCase):
         response = self.app.get('/recipes')
         self.assertEquals(response.data.decode('utf-8'), "[]")
 
+    def test_get_recipe_by_id(self):
+        recipe_id = self.app.post('/recipes',
+                      headers={'Content-Type': 'application/json'},
+                      data=ServerTestCase.RECIPE).data.decode('utf-8')
+        recipe = json.loads(self.app.get('/recipes/' + recipe_id).data.decode('utf-8'))
+        self.assertEquals(recipe['recipe_id'], recipe_id)
+
+    def test_get_recipe_by_id(self):
+        response = self.app.get('/recipes/missing')
+        self.assertEquals(response.status_code, 404)
+
     def test_add_fetch_delete_recipe(self):
         recipe_id = self.app.post('/recipes',
                       headers={'Content-Type': 'application/json'},
@@ -31,7 +42,7 @@ class ServerTestCase(unittest.TestCase):
         self.app.delete('/recipes/' + recipe_id)
 
     def test_delete_recipe_that_dont_exist(self):
-        response = self.app.delete('/recipes/123')
+        response = self.app.delete('/recipes/missing')
         self.assertEquals(response.status_code, 404)
 
 

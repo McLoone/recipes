@@ -40,9 +40,17 @@ class RecipeTest(unittest.TestCase):
     def test_fetch_from_empty_store(self):
         self.assertListEqual([], self.recipe_store.list_recipes())
 
+    def test_fetch_recipe_by_id(self):
+        recipe_id = self.recipe_store.add_recipe(Recipe.from_json(RecipeTest.RECIPE))
+        recipe = self.recipe_store.get_recipe(recipe_id)
+        self.assertEquals(recipe_id, recipe.recipe_id)
+
+    def test_fetch_recipe_by_missing_id(self):
+        recipe = self.recipe_store.get_recipe("missing")
+        self.assertEquals(recipe, None)
+
     def test_delete_recipe(self):
         recipe = Recipe.from_json(RecipeTest.RECIPE)
-
         recipe.recipe_id = self.recipe_store.add_recipe(recipe)
         self.assertListEqual([recipe], self.recipe_store.list_recipes())
 

@@ -20,6 +20,9 @@ class RecipeStore:
     def list_recipes(self):
         return list(self._recipes.values())
 
+    def get_recipe(self, recipe_id):
+        return self._recipes.get(recipe_id)
+
 
 class Recipe:
     def __init__(self, description,
