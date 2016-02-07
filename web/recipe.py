@@ -1,6 +1,7 @@
 import uuid
 import json
 
+
 class RecipeStore:
     def __init__(self):
         self._recipes = dict()
