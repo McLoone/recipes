@@ -1,5 +1,14 @@
 #Recipes is a very small recipe backend.#
 
+To build the docker image: 
+  docker build -t mcloone/recipes .
+  
+To run the docker container:
+  docker run -d -p 8080:8080 mcloone/recipes
+  
+Example call to a rest endpoint:
+    curl http://<docker-ip>:8080/recipes
+
 **Story:** A User add a Recipe
 
 As a user<br/>
